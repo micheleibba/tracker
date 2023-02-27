@@ -1,4 +1,4 @@
-var rootPath = "/";
+var rootPath = "/tracker/";
 
 function editSitemapResponse(evt)
 {

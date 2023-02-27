@@ -1,12 +1,12 @@
 <?php
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/user_default.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/style/php/style.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/secure.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/routines.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/anagrafica.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/menu.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/password.php');
+include_once ('./system/user_default.php');
+include_once ('./style/php/style.php');
+include_once ('./system/routines/php/secure.php');
+include_once ('./system/routines/php/routines.php');
+include_once ('./system/routines/php/anagrafica.php');
+include_once ('./system/routines/php/menu.php');
+include_once ('./system/routines/php/password.php');
 
 log_bootstrap();
 
@@ -73,7 +73,7 @@ else
         <ul class="nav">
             <?php
             $tid = get_tid_from_uid($uid);
-$menu = get_menu_from_tid($tid);
+            $menu = get_menu_from_tid($tid);
             for($i=0;$i<count($menu);$i++)
             {
             ?>

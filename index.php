@@ -1,11 +1,11 @@
 <?php
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/user_default.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/style/php/style.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/secure.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/routines.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/anagrafica.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/menu.php');
+include_once ('./system/user_default.php');
+include_once ('./style/php/style.php');
+include_once ('./system/routines/php/secure.php');
+include_once ('./system/routines/php/routines.php');
+include_once ('./system/routines/php/anagrafica.php');
+include_once ('./system/routines/php/menu.php');
 
 log_bootstrap();
 
@@ -75,20 +75,157 @@ log_bootstrap();
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-            <div class="row">
-                <div class="col-lg-12 grid-margin stretch-card">
-                  <div class="card">
-                    <div class="card-body">
-
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Nuovo Utente</h4>
+                  <form class="form-sample" method="post" action="" enctype="multipart/form-data">
+                    <p class="card-description">
+                      Aggiungi Utente
+                    </p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Ruolo</label>
+                          <div class="col-sm-9">
+                            <select class="card-standard-select" id="tid" name="tid">
+                            <?php
+                            $ruolo = get_user_types();
+                            for($i=0;$i<count($ruolo);$i++)
+                            {
+                            ?>
+                                  <option value="<?php print $ruolo[$i]["tid"]; ?>"><?php print $ruolo[$i]["name"]; ?></option>
+                            <?php
+                            }
+                            ?>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Nome</label>
+                          <div class="col-sm-9">
+                            <input type="text" id="nome" name="nome" class="form-control" value="" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Cognome</label>
+                          <div class="col-sm-9">
+                            <input type="text" id="cognome" name="cognome" class="form-control" value="" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Email</label>
+                          <div class="col-sm-9">
+                            <input type="text" id="email" name="email" class="form-control" value="" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Cellulare</label>
+                          <div class="col-sm-9">
+                            <input type="text" id="cellulare" name="cellulare" class="form-control" value="" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Username</label>
+                          <div class="col-sm-9">
+                            <input type="text" id="username" name="username" class="form-control" value="" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Password</label>
+                          <div class="col-sm-9">
+                            <input type="password" id="password" name="password" class="form-control" value="" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <input type="hidden" id="uid" name="uid" value="0">
+                    <button type="submit" value="submit" class="btn btn-primary mr-2">Salva</button>
+                  </form>
+
                 </div>
+              </div>
             </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-title">Operatori</p>
+                <div class="table-responsive">
+                  <table id="order-listing" class="table">
+                    <thead>
+                      <tr>
+                          <th>Ruolo</th>
+                          <th>Nome</th>
+                          <th>Cognome</th>
+                          <th>Email</th>
+                          <th>Cellulare</th>
+                          <th>Username</th>
+                          <th></th>
+                          <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $utenti = get_operatori_groupby_user_type();
+                        for($i=0;$i<count($utenti);$i++)
+                        {
+                        ?>
+                        <tr>
+                            <td><?php print $utenti[$i]["ruolo"]; ?></td>
+                            <td><?php print $utenti[$i]["nome"]; ?></td>
+                            <td><?php print $utenti[$i]["cognome"]; ?></td>
+                            <td><?php print $utenti[$i]["email"]; ?></td>
+                            <td><?php print $utenti[$i]["cellulare"]; ?></td>
+                            <td><?php print $utenti[$i]["username"]; ?></td>
+                            <td class="td-button-center">
+                                <button  onclick="editUser(<?php print $utenti[$i]["uid"]; ?>);" type="button" class="btn btn-primary btn-icon-text">
+                                      <i class="mdi mdi-file-check btn-icon-prepend"></i>
+                                      Modifica
+                                </button>
+                            </td>
+                            <td class="td-button-center">
+                                <button onclick="deleteUser(<?php print $utenti[$i]["uid"] ?>);" type="button" class="btn btn-danger btn-icon-text">
+                                      <i class="mdi mdi-delete btn-icon-prepend"></i>
+                                      Elimina
+                                </button>
+                            </td>
+                        </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <?php print get_content("footer"); ?>
+            <?php print get_content("footer"); ?>
           </div>
         </footer>
         </div>

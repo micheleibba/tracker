@@ -2,9 +2,9 @@
 
 require_once 'db_connect.php';
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/routines.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/anagrafica.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/lavorazioni.php');
+include_once ('./system/routines/php/routines.php');
+include_once ('./system/routines/php/anagrafica.php');
+include_once ('./system/routines/php/lavorazioni.php');
 
 function send_email()
 {

@@ -1,13 +1,13 @@
 <?php
 
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/user_default.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/style/php/style.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/secure.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/routines.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/anagrafica.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/menu.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/sitemap.php');
-include_once ($_SERVER['DOCUMENT_ROOT'] . './tracker/system/routines/php/menu.php');
+include_once ('./system/user_default.php');
+include_once ('./style/php/style.php');
+include_once ('./system/routines/php/secure.php');
+include_once ('./system/routines/php/routines.php');
+include_once ('./system/routines/php/anagrafica.php');
+include_once ('./system/routines/php/menu.php');
+include_once ('./system/routines/php/sitemap.php');
+include_once ('./system/routines/php/menu.php');
 
 log_bootstrap();
 

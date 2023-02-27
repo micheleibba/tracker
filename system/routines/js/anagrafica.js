@@ -1,9 +1,9 @@
-var rootPath = "/";
+var rootPath = "/tracker/";
 
 function editUserResponse(evt)
 {
     var reply = evt.target.responseText;
-    var obj = JSON.parse(reply);  
+    var obj = JSON.parse(reply);
     if(!parseInt(obj.error))
     {
         var uid = document.getElementById("uid");
@@ -32,13 +32,13 @@ function editUser(uid)
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', editUserResponse, false);
     xhr.open("POST", rootPath + "get/utente.php");
-    xhr.send(fd);  
+    xhr.send(fd);
 }
 
 function deleteUserResponse(evt)
 {
     var reply = evt.target.responseText;
-    var obj = JSON.parse(reply);  
+    var obj = JSON.parse(reply);
     if(!parseInt(obj.error))
     {
         location.reload();
@@ -52,5 +52,5 @@ function deleteUser(uid)
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', deleteUserResponse, false);
     xhr.open("POST", rootPath + "set/delete_utente.php");
-    xhr.send(fd);  
+    xhr.send(fd);
 }

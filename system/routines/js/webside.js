@@ -1,4 +1,4 @@
-var rootPath = "/";
+var rootPath = "/tracker/";
 var urlPathRegex = /http[s]*:\/\/[^\/]+(\/.+)/;
 
 function stampa(value)

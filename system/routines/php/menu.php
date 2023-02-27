@@ -1,17 +1,17 @@
 <?php
 
-require_once 'db_connect.php'; 
+require_once 'db_connect.php';
 
 function get_menu()
 {
     global $db;
-    
+
     $sql = mysqli_query($db, "SELECT mid, titolo, path, mdi, prio FROM menu ORDER BY prio");
-    
+
     if(!mysqli_num_rows($sql)){
         return;
     }
-    
+
     $i=0;
     while($row = mysqli_fetch_array($sql))
     {
