@@ -1,0 +1,44 @@
+
+.card-standard-select
+{
+    background-color: white;
+    border: 1px solid #f3f3f3;
+    color: black;
+    font-size: 15px;
+    font-weight: lighter;
+    height: 50px;
+    margin-right: 15px;
+    padding: 1vw;
+    width: 100%;
+}
+
+.row .padding-input
+{
+    padding-left: 2vw;
+}
+
+.row .padding-label
+{
+    margin-top:25px;
+}
+
+.row .padding-label-tot
+{
+    padding: 18px 22px 22px 22px;
+}
+
+.filter-buttons
+{
+    margin-bottom: 30px;
+}
+
+.hidden-label
+{
+    width: 100%;
+    color: white;
+}
+
+.padding-top-button
+{
+    margin-top:45px;
+}
