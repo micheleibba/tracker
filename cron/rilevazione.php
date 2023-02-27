@@ -4,6 +4,6 @@ include_once ('./system/user_default.php');
 include_once ('./system/routines/php/secure.php');
 include_once ('./system/routines/php/send.php');
 
-$ret = send_email();
+$ret = rileva();
 
 echo json_encode($ret);

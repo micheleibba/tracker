@@ -91,16 +91,16 @@ gulp.task('injectPartial', function () {
 /* inject Js and CCS assets into HTML */
 gulp.task('injectCommonAssets', function () {
   return gulp.src('./**/*.html')
-    .pipe(inject(gulp.src([ 
+    .pipe(inject(gulp.src([
         './vendors/mdi/css/materialdesignicons.min.css',
-        './vendors/base/vendor.bundle.base.css', 
+        './vendors/base/vendor.bundle.base.css',
         './vendors/base/vendor.bundle.base.js',
     ], {read: false}), {name: 'plugins', relative: true}))
     .pipe(inject(gulp.src([
-        './css/*.css', 
-        './js/off-canvas.js', 
-        './js/hoverable-collapse.js', 
-        './js/template.js', 
+        './css/*.css',
+        './js/off-canvas.js',
+        './js/hoverable-collapse.js',
+        './js/template.js',
         './js/todolist.js'
     ], {read: false}), {relative: true}))
     .pipe(gulp.dest('.'));
@@ -110,7 +110,7 @@ gulp.task('injectCommonAssets', function () {
 gulp.task('injectLayoutStyles', function () {
     return gulp.src('./**/*.html')
         .pipe(inject(gulp.src([
-            './css/style.css', 
+            './css/style.css',
         ], {read: false}), {relative: true}))
         .pipe(gulp.dest('.'));
 });
@@ -147,9 +147,9 @@ gulp.task('clean:vendors', function () {
 /*Building vendor scripts needed for basic template rendering*/
 gulp.task('buildBaseVendorScripts', function() {
     return gulp.src([
-        './node_modules/jquery/dist/jquery.min.js', 
-        './node_modules/popper.js/dist/umd/popper.min.js', 
-        './node_modules/bootstrap/dist/js/bootstrap.min.js', 
+        './node_modules/jquery/dist/jquery.min.js',
+        './node_modules/popper.js/dist/umd/popper.min.js',
+        './node_modules/bootstrap/dist/js/bootstrap.min.js',
         './node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js'
     ])
       .pipe(concat('vendor.bundle.base.js'))

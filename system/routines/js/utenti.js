@@ -8,7 +8,7 @@ function deleteUserResponse(evt)
     {
         alert("Utente eliminato correttamente.");
         location.reload();
-    } 
+    }
 }
 
 function deleteUser(uid)

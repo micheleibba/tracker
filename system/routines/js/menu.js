@@ -3,7 +3,7 @@ var rootPath = "/tracker/";
 function editMenuResponse(evt)
 {
     var reply = evt.target.responseText;
-    var obj = JSON.parse(reply);  
+    var obj = JSON.parse(reply);
     if(!parseInt(obj.error))
     {
         var mid = document.getElementById("mid");
@@ -26,13 +26,13 @@ function editMenu(mid)
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', editMenuResponse, false);
     xhr.open("POST", rootPath + "get/menu.php");
-    xhr.send(fd);  
+    xhr.send(fd);
 }
 
 function deleteMenuResponse(evt)
 {
     var reply = evt.target.responseText;
-    var obj = JSON.parse(reply);  
+    var obj = JSON.parse(reply);
     if(!parseInt(obj.error))
     {
         location.reload();
@@ -46,5 +46,5 @@ function deleteMenu(mid)
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', deleteMenuResponse, false);
     xhr.open("POST", rootPath + "set/delete_menu.php");
-    xhr.send(fd);  
+    xhr.send(fd);
 }

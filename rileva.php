@@ -92,11 +92,31 @@ else
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Nuovo Dispositivo</h4>
+                  <h4 class="card-title">Nuova Rilevazione</h4>
                   <form class="form-sample" method="post" action="" enctype="multipart/form-data">
                     <p class="card-description">
-                      Aggiungi Dispositivo
+                      Aggiungi Rilevazione
                     </p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Id Dispositivo</label>
+                          <div class="col-sm-9">
+                            <select class="card-standard-select" id="tid" name="tid">
+                            <?php
+                            $dispositivi = get_dispositivi();
+                            for($i=0;$i<count($dispositivi);$i++)
+                            {
+                            ?>
+                                  <option value="<?php print $dispositivi[$i]["idd"]; ?>"><?php print $dispositivi[$i]["nome"]; ?></option>
+                            <?php
+                            }
+                            ?>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">

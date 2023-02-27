@@ -18,7 +18,7 @@ function send_email()
     global $testo_task_odierni;
     global $testo_task_scaduti;
 
-    $subject = $oggetto_email_task;    
+    $subject = $oggetto_email_task;
     $ouid_lavorazioni = get_lavorazioni_groupby_ouid();
     for($i=0;$i<count($ouid_lavorazioni);$i++)
     {
@@ -102,16 +102,16 @@ function send_email()
                                    <font face="\'Source Sans Pro\', sans-serif" color="#1a1a1a" style="font-size: 52px; line-height: 60px; font-weight: 300; letter-spacing: -1.5px;">
                                       <span style="font-family: \'Source Sans Pro\', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 24px; line-height: 60px; font-weight: 300; letter-spacing: -1.5px;">Ciao '. $nome_utente .',</span>
                                    </font>';
-           
-        
+
+
         if(count($lavorazioni))
         {
             $message .= '       <div style="height: 33px; line-height: 33px; font-size: 31px;">&nbsp;</div>
                                 <font face="\'Source Sans Pro\', sans-serif" color="#585858" style="font-size: 18px; line-height: 32px;">
                                       <span style="font-family: \'Source Sans Pro\', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 18px; line-height: 32px;">
                                         '.$testo_task_odierni.'</span>
-                                   </font>';  
-        
+                                   </font>';
+
             $message .= '<table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">';
             for($j=0;$j<count($lavorazioni);$j++)
             {
@@ -121,7 +121,7 @@ function send_email()
                                     <span style="font-family: \'Source Sans Pro\', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 18px; line-height: 32px;">
                                         <b>&#8227; '.$lavorazioni[$j]["servizio"]["nome"].'</span></b>
                                 </font>
-                                </td></tr><ul>';  
+                                </td></tr><ul>';
                 for($k=0;$k<count($lavorazioni[$j]["tasks"]);$k++)
                 {
                     $message .= '   <li align="left" valign="top"><font face="\'Source Sans Pro\', sans-serif" color="#585858" style="font-size: 18px; line-height: 32px;">'
@@ -139,8 +139,8 @@ function send_email()
                                 <font face="\'Source Sans Pro\', sans-serif" color="#585858" style="font-size: 18px; line-height: 32px;">
                                       <span style="font-family: \'Source Sans Pro\', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 18px; line-height: 32px;">
                                         '.$testo_task_scaduti.'</span>
-                                   </font>';  
-        
+                                   </font>';
+
             $message .= '<table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">';
             for($j=0;$j<count($lavorazioni_scadute);$j++)
             {
@@ -150,7 +150,7 @@ function send_email()
                                     <span style="font-family: \'Source Sans Pro\', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 18px; line-height: 32px;">
                                         <b>&#8227; '.$lavorazioni_scadute[$j]["servizio"]["nome"].'</span></b>
                                 </font>
-                                </td></tr><ul>';  
+                                </td></tr><ul>';
                 for($k=0;$k<count($lavorazioni_scadute[$j]["tasks"]);$k++)
                 {
                     for($y=0;$y<count($lavorazioni_scadute[$j]["tasks"][$k]["todo"]);$y++)
@@ -158,7 +158,7 @@ function send_email()
                         if($lavorazioni_scadute[$j]["tasks"][$k]["eseguita"])
                         {
                             continue;
-                        }   
+                        }
                     $message .= '   <li align="left" valign="top"><font face="\'Source Sans Pro\', sans-serif" color="#585858" style="font-size:18; line-height: 32px;">'
                                 . ' <span style="font-family: \'Source Sans Pro\', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 18px; line-height: 32px;">';
                     $message .= '&#9702; '.$lavorazioni_scadute[$j]["tasks"][$k]["cliente"]["nome_azienda"] . " - " . $lavorazioni_scadute[$j]["tasks"][$k]["task"]["nome"] . " - <b style='color:red'>Scaduto il: ".date("d/m/Y", $lavorazioni_scadute[$j]["tasks"][$k]["todo"][$y]["timestamp"])."</b>";

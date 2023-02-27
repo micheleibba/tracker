@@ -3,7 +3,7 @@ var rootPath = "/tracker/";
 function editSitemapResponse(evt)
 {
     var reply = evt.target.responseText;
-    var obj = JSON.parse(reply);  
+    var obj = JSON.parse(reply);
     if(!parseInt(obj.error))
     {
         var smid = document.getElementById("smid");
@@ -22,13 +22,13 @@ function editSitemap(smid)
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', editSitemapResponse, false);
     xhr.open("POST", rootPath + "get/sitemap.php");
-    xhr.send(fd);  
+    xhr.send(fd);
 }
 
 function deleteSitemapResponse(evt)
 {
     var reply = evt.target.responseText;
-    var obj = JSON.parse(reply);  
+    var obj = JSON.parse(reply);
     if(!parseInt(obj.error))
     {
         location.reload();
@@ -42,5 +42,5 @@ function deleteSitemap(smid)
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', deleteSitemapResponse, false);
     xhr.open("POST", rootPath + "set/delete_sitemap.php");
-    xhr.send(fd);  
+    xhr.send(fd);
 }

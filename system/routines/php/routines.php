@@ -1,6 +1,6 @@
 <?php
 
-require_once 'db_connect.php'; 
+require_once 'db_connect.php';
 
 function get_today_timestamp()
 {

@@ -3,6 +3,6 @@
     session_start();
     $_SESSION = array();
     session_destroy();
-    header("Location: " . $logout_redirect); 
+    header("Location: " . $logout_redirect);
     exit;
 ?>
