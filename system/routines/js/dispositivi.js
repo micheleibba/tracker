@@ -24,6 +24,30 @@ function deleteDispositivo(idd)
     }
 }
 
+function deleteRilevazioneResponse(evt)
+{
+    var reply = evt.target.responseText;
+    var obj = JSON.parse(reply);
+    if(!parseInt(obj.error))
+    {
+        alert("Rilevazione eliminata correttamente.");
+        location.reload();
+    }
+}
+
+function deleteRilevazione(idr)
+{
+    if(confirm("Sei sicuro di voler eliminare questa rilevazione?"))
+    {
+        var fd = new FormData();
+        fd.append("idr", idr);
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', deleteRilevazioneResponse, false);
+        xhr.open("POST", rootPath + "set/delete_rilevazione.php");
+        xhr.send(fd);
+    }
+}
+
 function editDispositivoResponse(evt)
 {
     var reply = evt.target.responseText;

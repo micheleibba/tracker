@@ -92,3 +92,57 @@ function cancella_dispositivo($idd)
     global $db;
     mysqli_query($db, "DELETE FROM dispositivi WHERE idd = '$idd'");
 }
+
+function aggiungi_rilevazione($dati)
+{
+    global $db;
+    global $_SERVER;
+    if($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+        $idd = $dati["idd"];
+        $pm = $dati["pm"];
+        $CO = $dati["CO"];
+        $NO2 = $dati["NO2"];
+        $SO2 = $dati["SO2"];
+        $O3 = $dati["O3"];
+        $timestamp = $dati["timestamp"];
+        mysqli_query($db, "INSERT INTO rilevazioni (idd,pm,CO,NO2,SO2,O3,data_rilevazione) VALUES ('$idd','$pm','$CO','$NO2','$SO2','$O3','$timestamp')");
+        $ret["error"] = 0;
+    }
+    else
+    {
+        $ret["error"] = 1;
+    }
+    return $ret;
+}
+
+function get_rilevazioni()
+{
+    global $db;
+    $sql = mysqli_query($db, "SELECT idr,idd,pm,CO,NO2,SO2,O3,data_rilevazione FROM rilevazioni ORDER BY idr");
+
+    if(!mysqli_num_rows($sql)){
+        return;
+    }
+
+    $i=0;
+    while($row = mysqli_fetch_array($sql))
+    {
+        $ret[$i]["idr"] = $row["idr"];
+        $ret[$i]["idd"] = $row["idd"];
+        $ret[$i]["pm"] = $row["pm"];
+        $ret[$i]["CO"] = $row["CO"];
+        $ret[$i]["NO2"] = $row["NO2"];
+        $ret[$i]["SO2"] = $row["SO2"];
+        $ret[$i]["O3"] = $row["O3"];
+        $ret[$i]["timestamp"] = $row["data_rilevazione"];
+        $i++;
+    }
+    return $ret;
+}
+
+function cancella_rilevazione($idr)
+{
+    global $db;
+    mysqli_query($db, "DELETE FROM rilevazioni WHERE idr = '$idr'");
+}

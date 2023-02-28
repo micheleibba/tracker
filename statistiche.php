@@ -10,13 +10,6 @@ include_once ('./system/routines/php/dispositivi.php');
 
 log_bootstrap();
 
-
-if(!$_POST["idr"])
-{
-    prevent_refresh_submit(aggiungi_rilevazione($_POST, $_POST["tid"])["error"]);
-}
-
-
 ?>
 
 <html lang="en">
@@ -25,7 +18,14 @@ if(!$_POST["idr"])
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?php print $title ?></title>
     <?php print get_content("header"); ?>
-    <script src="./system/routines/js/dispositivi.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <style>
+    #map
+    {
+      height: 400px;
+      width: 100%;
+    }
+    </style>
 </head>
 <body>
   <div class="container-scroller">
@@ -85,96 +85,24 @@ if(!$_POST["idr"])
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-12 grid-margin">
+						<div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Nuova Rilevazione</h4>
-                  <form class="form-sample" method="post" action="" enctype="multipart/form-data">
-                    <p class="card-description">
-                      Aggiungi Rilevazione
-                    </p>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Id Dispositivo</label>
-                          <div class="col-sm-9">
-                            <select class="card-standard-select" id="idd" name="idd">
-                            <?php
-                            $dispositivi = get_dispositivi();
-                            for($i=0;$i<count($dispositivi);$i++)
-                            {
-                            ?>
-                                  <option value="<?php print $dispositivi[$i]["idd"]; ?>"><?php print $dispositivi[$i]["nome"]; ?></option>
-                            <?php
-                            }
-                            ?>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Concentrazione polveri sottili</label>
-                            <div class="col-sm-9">
-                              <input type="text" id="pm" name="pm" class="form-control" value="" />
-                            </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Monossido di carbonio</label>
-                          <div class="col-sm-9">
-                            <input type="text" id="CO" name="CO" class="form-control" value="" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Diossido di azoto</label>
-                          <div class="col-sm-9">
-                            <input type="text" id="NO2" name="NO2" class="form-control" value="" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Anidride solforosa</label>
-                          <div class="col-sm-9">
-                            <input type="text" id="SO2" name="SO2" class="form-control" value="" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Ozono al livello del suolo</label>
-                          <div class="col-sm-9">
-                            <input type="text" id="O3" name="O3" class="form-control" value="" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Timestamp</label>
-                          <div class="col-sm-9">
-                            <input type="text" id="timestamp" name="timestamp" class="form-control" value="" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <input type="hidden" id="idr" name="idr" value="0">
-                    <button type="submit" value="submit" class="btn btn-primary mr-2">Salva</button>
-                  </form>
-
+                  <h4 class="card-title">Mappa</h4>
+                  <div id="map"></div>
                 </div>
               </div>
-            </div>
-        </div>
+						</div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Statistica</h4>
+                  <div id="statistiche-data-label" class="d-flex justify-content-center pt-3"></div>
+                  <canvas id="statistiche-data"></canvas>
+                </div>
+              </div>
+						</div>
+					</div>
         <div class="row">
           <div class="col-md-12 stretch-card">
             <div class="card">
@@ -191,7 +119,6 @@ if(!$_POST["idr"])
                           <th>Anidride solforosa</th>
                           <th>Ozono al livello del suolo</th>
                           <th>Timestamp</th>
-                          <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -207,13 +134,7 @@ if(!$_POST["idr"])
                             <td><?php print $dispositivi[$i]["NO2"]; ?></td>
                             <td><?php print $dispositivi[$i]["SO2"]; ?></td>
                             <td><?php print $dispositivi[$i]["O3"]; ?></td>
-                            <td><?php print $dispositivi[$i]["timestamp"]; ?></td>
-                            <td class="td-button-center">
-                                <button onclick="deleteRilevazione(<?php print $dispositivi[$i]["idr"] ?>);" type="button" class="btn btn-danger btn-icon-text">
-                                      <i class="mdi mdi-delete btn-icon-prepend"></i>
-                                      Elimina
-                                </button>
-                            </td>
+                            <td><?php print date('d/m/Y H:m:s', $dispositivi[$i]['timestamp']); ?></td>
                         </tr>
                         <?php
                         }
@@ -242,6 +163,129 @@ if(!$_POST["idr"])
   <!-- container-scroller -->
 
 <?php print get_content("footer_script"); ?>
+<script>
+  <?php
+      $labels = "[";
+      $pm = "[";
+      $CO = "[";
+      $NO2 = "[";
+      $SO2 = "[";
+      $O3 = "[";
+      for($i=1;$i<=count($dispositivi);$i++)
+      {
+          $labels .= "".$dispositivi[$i]['timestamp'].",";
+          $pm .= $dispositivi[$i]["pm"].",";
+          $CO .= $dispositivi[$i]["CO"].",";
+          $NO2 .= $dispositivi[$i]["NO2"].",";
+          $SO2 .= $dispositivi[$i]["SO2"].",";
+          $O3 .= $dispositivi[$i]["O3"].",";
+
+      }
+      $pm .= "]";
+      $CO .= "]";
+      $NO2 .= "]";
+      $SO2 .= "]";
+      $O3 .= "]";
+      $labels .= "]";
+  ?>
+  var ctx = document.getElementById('statistiche-data').getContext('2d');
+  var myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+          labels: <?php print $labels; ?>,
+          datasets: [{
+              label: 'Pm',
+              data: <?php print $pm; ?>,
+              backgroundColor: [
+                  'rgba(0,200,0, 0)'
+              ],
+              borderColor: [
+                  'rgba(0,200,0, 1)'
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'CO',
+              data: <?php print $CO; ?>,
+              backgroundColor: [
+                  'rgba(255, 0, 0, 0)'
+              ],
+              borderColor: [
+                  'rgba(255, 0, 0, 1)'
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'NO2',
+              data: <?php print $NO2; ?>,
+              backgroundColor: [
+                  'rgba(0,155,0, 0)'
+              ],
+              borderColor: [
+                  'rgba(0,155,0, 1)'
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'SO2',
+              data: <?php print $SO2; ?>,
+              backgroundColor: [
+                  'rgba(255, 0, 200, 0)'
+              ],
+              borderColor: [
+                  'rgba(255, 0, 200, 1)'
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'O3',
+              data: <?php print $O3; ?>,
+              backgroundColor: [
+                  'rgba(255, 200, 0, 0)'
+              ],
+              borderColor: [
+                  'rgba(255, 200, 0, 1)'
+              ],
+              borderWidth: 1
+          }
+          ]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBp9X8I6p1y9EAPucB3NN08wgyP6d6JWLY&callback=initMap&v=weekly" defer></script>
+  <script>
+  function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 10,
+      center: { lat: 42.3959942, lng: 11.1958989 },
+    });
+    <?php
+    $dispositivi = get_dispositivi();
+    for($i=0;$i<count($dispositivi);$i++)
+    {
+    ?>
+    var pin = { lat: <?php print $dispositivi[$i]["coord_x"]; ?>, lng: <?php print $dispositivi[$i]["coord_y"]; ?> };
+    var marker = new google.maps.Marker({
+      position: pin,
+      map: map,
+    });
+    <?php
+    }
+    ?>
+
+  }
+
+  window.initMap = initMap;
+  </script>
 </body>
 
 </html>
